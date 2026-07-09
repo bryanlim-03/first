@@ -17,6 +17,7 @@ jobs:
   build-web:
     name: Build WebGL demos
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +34,7 @@ jobs:
         continue-on-error: true
         working-directory: Chapter2/2-OpenGLES3_Primitives-Modern
         run: |
-          sed 's/-s USE_WEBGL2=1 \\/-s USE_WEBGL2=1 \\\n    -s MIN_WEBGL_VERSION=2 \\/' build_web.sh | bash
+          sed 's/-s USE_WEBGL2=1 \\/-s USE_WEBGL2=1 \\\n    -s MIN_WEBGL_VERSION=2 \\\n    -s MAX_WEBGL_VERSION=2 \\/' build_web.sh | bash
           mkdir -p ../../site/Chapter2/2-OpenGLES3_Primitives-Modern
           cp -r web/. ../../site/Chapter2/2-OpenGLES3_Primitives-Modern/
 
@@ -41,6 +42,11 @@ jobs:
         run: |
           mkdir -p site/Assignment1/AndroidProgrammingQuiz-CrossPlatformCI
           cp -r Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/. site/Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/
+
+      - name: Copy Fixed Assignment 1 WebGL output
+        run: |
+          mkdir -p site/Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI
+          cp -r Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/. site/Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/
 
       - name: Generate index.html
         run: |
@@ -57,11 +63,15 @@ jobs:
 
             <h2>Chapter 2 — Primitives</h2>
             <p>OpenGL primitives: point, line, and triangle with their variations.</p>
-            <p><a href="Chapter2/2-OpenGLES3_Primitives-Modern/">Launch the demo</a></p>
+            <p><a href="Chapter2/2-OpenGLES3_Primitives-Modern/">Launch Chapter 2 demo</a></p>
 
             <h2>Assignment 1 — Android Programming Quiz</h2>
             <p>Completed WebGL/Emscripten output for my assignment.</p>
             <p><a href="Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/">Launch Assignment 1 demo</a></p>
+
+            <h2>Assignment 1 Fixed — Android Programming Quiz</h2>
+            <p>Fixed WebGL/Emscripten output for my assignment.</p>
+            <p><a href="Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/">Launch fixed Assignment 1 demo</a></p>
           </body>
           </html>
           HTML
@@ -78,9 +88,11 @@ jobs:
     name: Deploy to GitHub Pages
     needs: build-web
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
