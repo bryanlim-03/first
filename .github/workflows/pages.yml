@@ -48,6 +48,11 @@ jobs:
           mkdir -p site/Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI
           cp -r Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/. site/Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/
 
+      - name: Copy Working Assignment 1 WebGL output
+        run: |
+          mkdir -p site/Assignment1Working/AndroidProgrammingQuiz-CrossPlatformCI
+          cp -r Assignment1Working/AndroidProgrammingQuiz-CrossPlatformCI/. site/Assignment1Working/AndroidProgrammingQuiz-CrossPlatformCI/
+
       - name: Generate index.html
         run: |
           cat > site/index.html << 'HTML'
@@ -72,6 +77,10 @@ jobs:
             <h2>Assignment 1 Fixed — Android Programming Quiz</h2>
             <p>Fixed WebGL/Emscripten output for my assignment.</p>
             <p><a href="Assignment1Fixed/AndroidProgrammingQuiz-CrossPlatformCI/">Launch fixed Assignment 1 demo</a></p>
+
+            <h2>Assignment 1 Working — Android Programming Quiz</h2>
+            <p>Verified local WebGL/Emscripten output for my assignment.</p>
+            <p><a href="Assignment1Working/AndroidProgrammingQuiz-CrossPlatformCI/">Launch working Assignment 1 demo</a></p>
           </body>
           </html>
           HTML
