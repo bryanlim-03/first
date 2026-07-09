@@ -29,8 +29,6 @@ jobs:
       - name: Create site directory
         run: mkdir -p site
 
-      # Inject -s MIN_WEBGL_VERSION=2 at runtime so the GLSL ES 3.00 shader parser
-      # is used, without modifying any source files.
       - name: Build Chapter2/2-OpenGLES3_Primitives-Modern
         continue-on-error: true
         working-directory: Chapter2/2-OpenGLES3_Primitives-Modern
@@ -38,6 +36,11 @@ jobs:
           sed 's/-s USE_WEBGL2=1 \\/-s USE_WEBGL2=1 \\\n    -s MIN_WEBGL_VERSION=2 \\/' build_web.sh | bash
           mkdir -p ../../site/Chapter2/2-OpenGLES3_Primitives-Modern
           cp -r web/. ../../site/Chapter2/2-OpenGLES3_Primitives-Modern/
+
+      - name: Copy Assignment 1 WebGL output
+        run: |
+          mkdir -p site/Assignment1/AndroidProgrammingQuiz-CrossPlatformCI
+          cp -r Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/. site/Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/
 
       - name: Generate index.html
         run: |
@@ -55,6 +58,10 @@ jobs:
             <h2>Chapter 2 — Primitives</h2>
             <p>OpenGL primitives: point, line, and triangle with their variations.</p>
             <p><a href="Chapter2/2-OpenGLES3_Primitives-Modern/">Launch the demo</a></p>
+
+            <h2>Assignment 1 — Android Programming Quiz</h2>
+            <p>Completed WebGL/Emscripten output for my assignment.</p>
+            <p><a href="Assignment1/AndroidProgrammingQuiz-CrossPlatformCI/">Launch Assignment 1 demo</a></p>
           </body>
           </html>
           HTML
